@@ -36,7 +36,7 @@ View list of events:
 
 Inspect an event:
 
-    curl -s -H "Accept: application/vnd.conference.v1+json" "http://localhost:8080/conference/https%253A%252F%252Fapi.joind.in%252Fv2.1%252Fevents%252F1371"
+    curl -s -H "Accept: application/vnd.conference.v1+json" "http://localhost:8080/conference/https%253A%252F%252Fapi.joind.in%252Fv2.1%252Fevents%252F1515"
 
 or
     curl -s -H "Accept: application/vnd.conference.v1+json" "http://localhost:8080/conference/https%253A%252F%252Fapi.joind.in%252Fv2.1%252Fevents%252F1546"

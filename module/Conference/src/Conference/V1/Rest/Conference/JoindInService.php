@@ -23,7 +23,7 @@ class JoindInService
         try {
             $response = $request->send();
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), 503);
         }
 
         return $response;
@@ -31,8 +31,8 @@ class JoindInService
 
     public function getHotEvents()
     {
+        $uri = '/v2.1/events?filter=hot';
         $response = $this->request($uri);
-        $response = $request->send();
         $events = $response->json();
 
         if (!isset($events['events'])) {
@@ -57,6 +57,7 @@ class JoindInService
 
     public function getEvent($uri)
     {
+        $uri = urldecode($uri);
         $response = $this->request($uri);
         $events = $response->json();
         if (!isset($events['events'])) {
