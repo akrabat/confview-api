@@ -1,57 +1,15 @@
-Apigility Skeleton Application
+ConfView Apigility Web Service
 ==============================
+
+A simple webservice to provide some statistics about an event that is on [joind.in](https://joind.in)
+
+
 
 Installation
 ------------
 
-### Via release tarball
-
-Grab the latest release via the [Apigility website](http://apigility.org/)
-and/or the [releases page](https://github.com/zfcampus/zf-apigility-skeleton/releases).
-At the time of this writing, that URI is:
-
-- https://github.com/zfcampus/zf-apigility-skeleton/releases/download/0.6.0/zf-apigility-skeleton.tgz
-
-Untar it:
-
-```bash
-    tar xzf zf-apigility-skeleton.tgz
-```
-
-### Via Composer (create-project)
-
-You can use the `create-project` command from [Composer](http://getcomposer.org/)
-to create the project in one go:
-
-```bash
-    curl -s https://getcomposer.org/installer | php --
-    php composer.phar create-project -sdev zfcampus/zf-apigility-skeleton path/to/install
-```
-
-### Via Git (clone)
-
-First, clone the repository:
-
-```bash
-    git clone https://github.com/zfcampus/zf-apigility-skeleton.git # optionally, specify the directory in which to clone
-    cd path/to/install
-```
-
-At this point, you need to use [Composer](https://getcomposer.org/) to install
-dependencies. Assuming you already have Composer:
-
-```bash
-    composer.phar install
-```
-
-### All methods
-
-Once you have the basic installation, you need to put it in development mode:
-
-```bash
-    cd path/to/install
-    php public/index.php development enable # put the skeleton in development mode
-```
+* Download the [zip file](https://github.com/akrabat/confview-api/archive/master.zip).
+* Install composer and then run `composer.phar update`
 
 Now, fire it up! Do one of the following:
 
@@ -67,12 +25,21 @@ In the latter case, do the following:
     php -S 0:8080 -t public/ public/index.php
 ```
 
-You can then visit the site at http://localhost:8080/ - which will bring up a
-welcome page and the ability to visit the dashboard in order to create and
-inspect your APIs.
+You can then visit the site at http://localhost:8080/
 
-### NOTE ABOUT USING PHP BUILT-IN WEB SERVER
+## Curl examples:
 
-PHP's built-in web server did not start supporting the `PATCH` HTTP method until
-5.4.8. Since the admin API makes use of this HTTP method, you must use a version
-&gt;= 5.4.8 when using the built-in web server.
+View list of events:
+
+    curl -s -H "Accept: application/vnd.conference.v1+json" http://localhost:8080/conference
+
+
+Inspect an event:
+
+    curl -s -H "Accept: application/vnd.conference.v1+json" "http://localhost:8080/conference/https%253A%252F%252Fapi.joind.in%252Fv2.1%252Fevents%252F1371"
+
+or
+    curl -s -H "Accept: application/vnd.conference.v1+json" "http://localhost:8080/conference/https%253A%252F%252Fapi.joind.in%252Fv2.1%252Fevents%252F1546"
+
+
+

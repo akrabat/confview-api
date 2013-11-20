@@ -2,6 +2,7 @@
 namespace Conference\V1\Rest\Conference;
 
 use Zend\Paginator\Adapter\ArrayAdapter;
+use Exception;
 
 class JoindInService
 {
@@ -16,9 +17,21 @@ class JoindInService
         $this->client = $client;
     }
 
+    protected function request($uri)
+    {
+        $request = $this->client->get(urldecode($uri));
+        try {
+            $response = $request->send();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        return $response;
+    }
+
     public function getHotEvents()
     {
-        $request = $this->client->get('/v2.1/events?filter=hot');
+        $response = $this->request($uri);
         $response = $request->send();
         $events = $response->json();
 
@@ -44,8 +57,7 @@ class JoindInService
 
     public function getEvent($uri)
     {
-        $request = $this->client->get(urldecode($uri));
-        $response = $request->send();
+        $response = $this->request($uri);
         $events = $response->json();
         if (!isset($events['events'])) {
             return null;
@@ -66,9 +78,7 @@ class JoindInService
     protected function getTalkData($entity, $talksUri)
     {
         $uri = urldecode($talksUri) . '?resultsperpage=1000';
-        
-        $request = $this->client->get($uri);
-        $response = $request->send();
+        $response = $this->request($uri);
         $data = $response->json();
         if (!isset($data['talks'])) {
             return;
@@ -98,14 +108,14 @@ class JoindInService
         $topTalk = array_shift($list);
         $bottomTalk = array_pop($list);
 
-        $entity->BestTalk = $topTalk;
-        $entity->WorstTalk = $bottomTalk;
+        $entity->bestTalk = $topTalk;
+        $entity->worstTalk = $bottomTalk;
     }
 
     protected function getEventCommentData($entity, $commentsUri)
     {
-        $request = $this->client->get(urldecode($commentsUri));
-        $response = $request->send();
+        $uri = urldecode($commentsUri);
+        $response = $this->request($uri);
         $data = $response->json();
         if (!isset($data)) {
             return;
